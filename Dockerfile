@@ -1,12 +1,12 @@
-FROM node:8
+FROM node:12
 
-RUN npm install -g --unsafe-perm mosca
+RUN npm install -g aedes-cli
 
 ARG USERNAME=admin
 ARG PASSWORD=test
 
-RUN mosca adduser ${USERNAME} ${PASSWORD} --credentials ./credentials.json
+RUN aedes adduser ${USERNAME} ${PASSWORD} --credentials ./credentials.json
 
 EXPOSE 80
 
-ENTRYPOINT [ "mosca", "--credentials", "./credentials.json", "--http-port", "80", "--only-http"]
+ENTRYPOINT [ "aedes", "--credentials", "./credentials.json", "--http-port", "80", "--only-http"]
