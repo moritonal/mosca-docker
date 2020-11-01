@@ -9,4 +9,4 @@ RUN aedes adduser ${USERNAME} ${PASSWORD} --credentials ./credentials.json
 
 EXPOSE 80
 
-ENTRYPOINT [ "aedes", "--credentials", "./credentials.json", "--http-port", "80", "--only-http"]
+ENTRYPOINT [ "aedes", "--credentials", "./credentials.json", "--protos", "wss", "--wss-port", "80"]
