@@ -2,11 +2,12 @@ FROM node:12
 
 RUN npm install -g aedes-cli
 
-ARG USERNAME=admin
-ARG PASSWORD=test
+WORKDIR /app
 
-RUN aedes adduser ${USERNAME} ${PASSWORD} --credentials ./credentials.json
+COPY start.sh .
+
+RUN chmod +x ./start.sh
 
 EXPOSE 80
 
-ENTRYPOINT [ "aedes", "--host", "0.0.0.0", "--credentials", "./credentials.json", "--protos", "ws", "--ws-port", "80"]
+ENTRYPOINT [ "./start.sh" ]
