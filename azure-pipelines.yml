@@ -9,6 +9,7 @@ resources:
    - repository: bonner-deploy
      type: github
      name: moritonal/bonner-deploy
+     endpoint: moritonal
 
 stages:
   - template: templates\build_and_release.yml@bonner-deploy
