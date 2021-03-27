@@ -4,13 +4,14 @@ trigger:
 pool:
   name: "Pool"
 
-steps:
-- task: Docker@2
-  inputs:
-    containerRegistry: 'bonner-registry'
-    repository: 'mosca-docker'
-    command: 'buildAndPush'
-    Dockerfile: '**/Dockerfile'
-    tags: |
-      $(Build.BuildId)
-      latest
+resources:
+ repositories:
+   - repository: bonner-deploy
+     type: github
+     name: moritonal/bonner-deploy
+
+stages:
+  - template: templates\build_and_release.yml@bonner-deploy
+    parameters:
+      ContainerRegistryName: mosca-docker
+      DockerComposeName: mosca
