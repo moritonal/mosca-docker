@@ -32,3 +32,4 @@ stages:
               imageSource: 'imagename'
               sourceImageName: $(RepositoryName)
               repositoryName: $(RepositoryName)
+              autoCreateRepository: true
