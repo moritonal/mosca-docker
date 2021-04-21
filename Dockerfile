@@ -1,4 +1,4 @@
-FROM node:12
+FROM node:12-alpine
 
 RUN npm install -g aedes-cli
 
@@ -10,4 +10,4 @@ RUN chmod +x ./start.sh
 
 EXPOSE 80
 
-ENTRYPOINT [ "./start.sh" ]
+ENTRYPOINT [ "sh", "./start.sh" ]
