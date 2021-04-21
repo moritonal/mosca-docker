@@ -4,15 +4,31 @@ trigger:
 pool:
   name: "Pool"
 
-resources:
- repositories:
-   - repository: bonner-deploy
-     type: github
-     name: moritonal/bonner-deploy
-     endpoint: moritonal
+variables:
+  - group: bonner-deploy
+  - name: RepositoryName
+    value: mosca-docker
 
 stages:
-  - template: templates\build_and_release.yml@bonner-deploy
-    parameters:
-      ContainerRegistryName: mosca-docker
-      DockerComposeName: mosca
+  - stage: Build
+    jobs:
+      - job: Build
+        steps:
+          - task: NodeTool@0
+            inputs:
+              versionSpec: '10.x'
+            displayName: 'Install Node.js'
+
+          - task: DockerInstaller@0
+            displayName: Setup Docker
+
+          - pwsh: docker build -t $(RepositoryName) .
+            displayName: Build
+
+          - task: ECRPushImage@1
+            inputs:
+              awsCredentials: 'AWS'
+              regionName: $(RegistryLocation)
+              imageSource: 'imagename'
+              sourceImageName: $(RepositoryName)
+              repositoryName: $(RepositoryName)
